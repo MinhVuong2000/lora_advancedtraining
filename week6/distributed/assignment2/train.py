@@ -341,7 +341,7 @@ if __name__ == "__main__":
         
         # Initialize the process group 
         torch.distributed.init_process_group(backend=backend) ### YOUR CODE HERE ###
-        local_rank = os.environ['LOCAL_RANK'] ### YOUR CODE HERE ###
+        local_rank = int(os.environ['LOCAL_RANK']) ### YOUR CODE HERE ###
     else:
         os.environ['RANK'] = '0'
         local_rank = 0
@@ -358,7 +358,7 @@ if __name__ == "__main__":
         max_length = max_length,
         batch_size = batch_size,
         gpu_id=local_rank,
-        mixed_precision_dtype = None, #TODO: Set the mixed precision data type, hint use float16
+        mixed_precision_dtype = torch.float16, #TODO: Set the mixed precision data type, hint use float16
         tokenizer=tokenizer,
         output_dir= OUTPUT_DIR,
         is_ddp_training = True if distributed_strategy == "ddp" else False,
